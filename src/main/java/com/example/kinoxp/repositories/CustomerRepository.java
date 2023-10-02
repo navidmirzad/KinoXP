@@ -1,4 +1,7 @@
 package com.example.kinoxp.repositories;
 
-public interface CustomerRepository {
+import com.example.kinoxp.model.Customer;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface CustomerRepository extends JpaRepository<Customer, String> {
 }
