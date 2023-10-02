@@ -15,41 +15,32 @@ public class Show {
 
         @Id
         @GeneratedValue(strategy = GenerationType.IDENTITY)
-        private int showID;
+        private int id;
         private LocalDate date;
         private LocalTime time;
 
         @ManyToOne
-        @JoinColumn(name = "movie", referencedColumnName = "ID") //
+        @JoinColumn(name = "movie", referencedColumnName = "id") //
         private Movie movie;
 
         @ManyToOne
-        @JoinColumn(name = "theaterHall", referencedColumnName = "theaterHallID")
+        @JoinColumn(name = "theaterhall", referencedColumnName = "id")
         private TheaterHall theaterHall;
 
         @OneToMany(mappedBy = "show", cascade = CascadeType.ALL)
         @JsonBackReference
         private Set<Ticket> tickets = new HashSet<>();
 
-        public Show(int showID, LocalDate date, LocalTime time, Movie movie, TheaterHall theaterHall, Set<Ticket> tickets) {
-                this.showID = showID;
-                this.date = date;
-                this.time = time;
-                this.movie = movie;
-                this.theaterHall = theaterHall;
-                this.tickets = tickets;
-        }
-
         public Show() {
 
         }
 
-        public int getShowID() {
-                return showID;
+        public int getId() {
+                return id;
         }
 
-        public void setShowID(int showID) {
-                this.showID = showID;
+        public void setId(int id) {
+                this.id = id;
         }
 
         public LocalDate getDate() {

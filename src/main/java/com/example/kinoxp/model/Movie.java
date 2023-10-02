@@ -21,19 +21,6 @@ public class Movie {
     private String director;
     private String writers;
 
-    public Movie(int id, String title, String description, String image, int year,
-                 String trailer, String genre, String director, String writers) {
-        this.id = id;
-        this.title = title;
-        this.description = description;
-        this.image = image;
-        this.year = year;
-        this.trailer = trailer;
-        this.genre = genre;
-        this.director = director;
-        this.writers = writers;
-    }
-
     public Movie() {
     }
 

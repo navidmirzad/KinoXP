@@ -11,32 +11,27 @@ import java.util.Set;
 public class Seat {
 
     @Id
-    private String seatID;
+    private int id;
+
 
     @OneToMany(mappedBy = "seat", cascade = CascadeType.ALL)
     @JsonBackReference
     private Set<Ticket> tickets = new HashSet<>();
 
     @ManyToOne
-    @JoinColumn(name = "theaterHall", referencedColumnName = "theaterHallID")
+    @JoinColumn(name = "theaterhall", referencedColumnName = "id")
     private TheaterHall theaterHall;
-
-    public Seat(String seatID, Set<Ticket> tickets, TheaterHall theaterHall) {
-        this.seatID = seatID;
-        this.tickets = tickets;
-        this.theaterHall = theaterHall;
-    }
 
     public Seat() {
 
     }
 
-    public String getSeatID() {
-        return seatID;
+    public int getId() {
+        return id;
     }
 
-    public void setSeatID(String seatID) {
-        this.seatID = seatID;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public Set<Ticket> getTickets() {

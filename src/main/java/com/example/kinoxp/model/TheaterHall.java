@@ -13,7 +13,7 @@ public class TheaterHall {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int theaterHallID;
+    private int id;
     private String name;
 
     @OneToMany(mappedBy = "theaterHall")
@@ -24,8 +24,8 @@ public class TheaterHall {
     @JsonBackReference
     private Set<Show> shows = new HashSet<>();
 
-    public TheaterHall(int theaterHallID, String name, Set<Seat> seats, Set<Show> shows) {
-        this.theaterHallID = theaterHallID;
+    public TheaterHall(int id, String name, Set<Seat> seats, Set<Show> shows) {
+        this.id = id;
         this.name = name;
         this.seats = seats;
         this.shows = shows;
@@ -35,12 +35,12 @@ public class TheaterHall {
 
     }
 
-    public int getTheaterHallID() {
-        return theaterHallID;
+    public int id() {
+        return id;
     }
 
-    public void setTheaterHallID(int theaterHallID) {
-        this.theaterHallID = theaterHallID;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getName() {

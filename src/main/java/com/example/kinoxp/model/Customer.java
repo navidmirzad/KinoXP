@@ -1,40 +1,39 @@
 package com.example.kinoxp.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 public class Customer {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int customerID;
+    private int id;
     @Column(unique = true)
     private String email;
     private String password;
     private Date birthday;
     private int phoneNumber;
 
-    public Customer(int customerID, String email, String password, Date birthday, int phoneNumber) {
-        this.customerID = customerID;
-        this.email = email;
-        this.password = password;
-        this.birthday = birthday;
-        this.phoneNumber = phoneNumber;
-    }
+    @OneToMany(mappedBy = "customer")
+    @JsonBackReference
+    private Set<Ticket> tickets = new HashSet<>();
 
     public Customer() {
 
     }
 
-    public int getCustomerID() {
-        return customerID;
+    public int getId() {
+        return id;
     }
 
-    public void setCustomerID(int customerID) {
-        this.customerID = customerID;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getEmail() {
@@ -67,5 +66,13 @@ public class Customer {
 
     public void setPhoneNumber(int phoneNumber) {
         this.phoneNumber = phoneNumber;
+    }
+
+    public Set<Ticket> getTickets() {
+        return tickets;
+    }
+
+    public void setTickets(Set<Ticket> tickets) {
+        this.tickets = tickets;
     }
 }

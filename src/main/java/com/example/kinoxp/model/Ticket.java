@@ -12,44 +12,31 @@ public class Ticket {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int ticketID;
+    private int id;
     private double price;
 
     @ManyToOne
-    @JoinColumn(name = "show", referencedColumnName = "showID")
+    @JoinColumn(name = "shows", referencedColumnName = "id")
     private Show show;
 
     @ManyToOne
-    @JoinColumn(name = "customer", referencedColumnName = "customerID")
+    @JoinColumn(name = "customer", referencedColumnName = "id")
     private Customer customer;
 
     @ManyToOne
-    @JoinColumn(name = "ceat", referencedColumnName = "seatID")
+    @JoinColumn(name = "seat", referencedColumnName = "id")
     private Seat seat;
-
-    @ManyToOne
-    @JoinColumn(name = "TheaterHall", referencedColumnName = "theaterHallID")
-    private TheaterHall theaterHall;
-
-    public Ticket(int ticketID, double price, Show show, Customer customer, Seat seat, TheaterHall theaterHall) {
-        this.ticketID = ticketID;
-        this.price = price;
-        this.show = show;
-        this.customer = customer;
-        this.seat = seat;
-        this.theaterHall = theaterHall;
-    }
 
     public Ticket() {
 
     }
 
-    public int getTicketID() {
-        return ticketID;
+    public int getId() {
+        return id;
     }
 
-    public void setTicketID(int ticketID) {
-        this.ticketID = ticketID;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public double getPrice() {
@@ -84,11 +71,4 @@ public class Ticket {
         this.seat = seat;
     }
 
-    public TheaterHall getTheaterHall() {
-        return theaterHall;
-    }
-
-    public void setTheaterHall(TheaterHall theaterHall) {
-        this.theaterHall = theaterHall;
-    }
 }
