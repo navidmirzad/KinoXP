@@ -17,6 +17,7 @@ public class Movie {
     private String description;
     private String image;
     private int year;
+
     //private String trailer;   url kommer ikke ind???
     //private String genre;     skal laves til et objekt og en liste og gemmes i db
     //private String director;  skal laves til et objekt og en liste og gemmes i db
