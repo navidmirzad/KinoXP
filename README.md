@@ -50,3 +50,14 @@ The KinoXP Cinema Reservation and Ticketing System is an IT solution developed t
 
    ```bash
    git clone https://github.com/your-username/kinoxp-cinema-system.git
+
+
+# Contributors
+
+The following individuals have contributed to this project:
+
+- [Navid Mirzad](https://github.com/navidmirzad)
+- [Colleague 1](https://github.com/colleague1-username)
+- [Colleague 2](https://github.com/colleague2-username)
+- [Colleague 3](https://github.com/colleague3-username)
+- [Colleague 4](https://github.com/colleague3-username)
