@@ -12,11 +12,11 @@ import java.util.List;
 @Component
 public class InitData implements CommandLineRunner {
 
-    @Autowired
-    private ApiServiceGetMovies apiServiceGetMovies;
 
     @Override
     public void run(String... args) throws Exception {
+
+
 
     }
 }

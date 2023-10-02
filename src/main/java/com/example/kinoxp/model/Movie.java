@@ -1,5 +1,6 @@
 package com.example.kinoxp.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -10,16 +11,15 @@ import lombok.*;
 public class Movie {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id; // API har id??
+    @JsonProperty("rank")
+    private int id;
     private String title;
     private String description;
     private String image;
     private int year;
-    private String trailer;
-    private String genre;
-    private String director;
-    private String writers;
+    //private String trailer;   url kommer ikke ind???
+    //private String genre;     skal laves til et objekt og en liste og gemmes i db
+    //private String director;  skal laves til et objekt og en liste og gemmes i db
 
     public Movie() {
     }
@@ -64,6 +64,7 @@ public class Movie {
         this.year = year;
     }
 
+    /*
     public String getTrailer() {
         return trailer;
     }
@@ -71,6 +72,7 @@ public class Movie {
     public void setTrailer(String trailer) {
         this.trailer = trailer;
     }
+
 
     public String getGenre() {
         return genre;
@@ -94,5 +96,5 @@ public class Movie {
 
     public void setWriters(String writers) {
         this.writers = writers;
-    }
+    }*/
 }
