@@ -1,11 +1,11 @@
 package com.example.kinoxp.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.*;
+
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 public class Movie {
@@ -18,12 +18,15 @@ public class Movie {
     private String image;
     private int year;
 
-    //private String trailer;   url kommer ikke ind???
-    //private String genre;     skal laves til et objekt og en liste og gemmes i db
-    //private String director;  skal laves til et objekt og en liste og gemmes i db
+    //private String trailer;
 
-    public Movie() {
-    }
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "movie_genre",
+            joinColumns = @JoinColumn(name = "movie_id"),
+            inverseJoinColumns = @JoinColumn(name = "genre_id"))
+    private Set<Genre> genres = new HashSet<>();
+
+    public Movie() {}
 
     public int getId() {
         return id;
@@ -65,6 +68,19 @@ public class Movie {
         this.year = year;
     }
 
+    public Set<Genre> getGenres() {
+        return genres;
+    }
+
+    public void setGenres(Set<Genre> genres) {
+        this.genres = genres;
+    }
+
+    public void addGenre(Genre genre) {
+        this.genres.add(genre);
+        genre.getMovies().add(this);
+    }
+
     /*
     public String getTrailer() {
         return trailer;
@@ -72,30 +88,5 @@ public class Movie {
 
     public void setTrailer(String trailer) {
         this.trailer = trailer;
-    }
-
-
-    public String getGenre() {
-        return genre;
-    }
-
-    public void setGenre(String genre) {
-        this.genre = genre;
-    }
-
-    public String getDirector() {
-        return director;
-    }
-
-    public void setDirector(String director) {
-        this.director = director;
-    }
-
-    public String getWriters() {
-        return writers;
-    }
-
-    public void setWriters(String writers) {
-        this.writers = writers;
-    }*/
+    } */
 }

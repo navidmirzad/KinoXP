@@ -1,14 +1,19 @@
 package com.example.kinoxp.service;
 
-import com.example.kinoxp.config.RestTemplateConfig;
+import com.example.kinoxp.dto.MovieDTO;
+import com.example.kinoxp.model.Genre;
 import com.example.kinoxp.model.Movie;
+import com.example.kinoxp.repositories.GenreRepository;
 import com.example.kinoxp.repositories.MovieRepository;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
@@ -26,6 +31,9 @@ public class ApiServiceGetMoviesImpl implements ApiServiceGetMovies {
 
     @Autowired
     private MovieRepository movieRepository;
+    @Autowired
+    private GenreRepository genreRepository;
+
 
     private final RestTemplate restTemplate;
 
@@ -33,8 +41,13 @@ public class ApiServiceGetMoviesImpl implements ApiServiceGetMovies {
         this.restTemplate = restTemplate;
     }
 
+    @Transactional
     private void saveMovies(List<Movie> movies) {
         movies.forEach(movie -> movieRepository.save(movie));
+    }
+
+    private void saveMovie(Movie movie) {
+        movieRepository.save(movie);
     }
 
     public List<Movie> getMovies() {
@@ -50,16 +63,44 @@ public class ApiServiceGetMoviesImpl implements ApiServiceGetMovies {
             headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
             HttpEntity<String> request = new HttpEntity<>(headers);
 
-            ResponseEntity<List<Movie>> movieResponse = restTemplate.exchange(uri,
+            ResponseEntity<String> movieResponse = restTemplate.exchange(uri,
                     HttpMethod.GET,
                     request,
-                    new ParameterizedTypeReference<List<Movie>>() {
-                    });
-            movies = movieResponse.getBody();
-            saveMovies(movies);
+                    String.class);
+            System.out.println(movieResponse);
 
-        } catch (URISyntaxException e) {
+            String jsonData = movieResponse.getBody();
+            System.out.println(jsonData);
+            ObjectMapper objectMapper = new ObjectMapper();
+            List<MovieDTO> movieDTOS = objectMapper.readValue(jsonData, new TypeReference<List<MovieDTO>>(){});
 
+            for (MovieDTO movieData : movieDTOS) {
+                Movie movie = new Movie();
+                movie.setId(movieData.getMovieId());
+                movie.setTitle(movieData.getTitle());
+                movie.setDescription(movieData.getDescription());
+                movie.setYear(movieData.getYear());
+                movie.setImage(movieData.getImage());
+
+                for (String genreName : movieData.getGenres()) {
+                    Genre genre = genreRepository.findByName(genreName);
+                    if (genre == null) {
+                        genre = new Genre();
+                        genre.setName(genreName);
+                        genreRepository.save(genre);
+                    }
+                    movie.getGenres().add(genre);
+                }
+
+                // Save the movie entity
+                saveMovie(movie);
+                movies.add(movie);
+            }
+
+
+
+        } catch (URISyntaxException | IOException e) {
+            e.printStackTrace();
         }
         return movies;
     }
