@@ -25,7 +25,6 @@ public class Customer {
     private Set<Ticket> tickets = new HashSet<>();
 
     public Customer() {
-
     }
 
     public int getId() {

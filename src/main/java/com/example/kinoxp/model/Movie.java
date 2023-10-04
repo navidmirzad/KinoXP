@@ -1,6 +1,7 @@
 package com.example.kinoxp.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -11,7 +12,7 @@ import java.util.Set;
 public class Movie {
 
     @Id
-    @JsonProperty("rank")
+    @GeneratedValue(strategy =  GenerationType.IDENTITY)
     private int id;
     private String title;
     private String description;

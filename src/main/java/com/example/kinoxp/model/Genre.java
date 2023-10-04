@@ -1,5 +1,6 @@
 package com.example.kinoxp.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 
 import java.util.HashSet;
@@ -14,6 +15,7 @@ public class Genre {
     private String name;
 
     @ManyToMany(mappedBy = "genres")
+    @JsonBackReference
     private Set<Movie> movies = new HashSet<>();
 
     public Genre() {}

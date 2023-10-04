@@ -76,7 +76,6 @@ public class ApiServiceGetMoviesImpl implements ApiServiceGetMovies {
 
             for (MovieDTO movieData : movieDTOS) {
                 Movie movie = new Movie();
-                movie.setId(movieData.getMovieId());
                 movie.setTitle(movieData.getTitle());
                 movie.setDescription(movieData.getDescription());
                 movie.setYear(movieData.getYear());
