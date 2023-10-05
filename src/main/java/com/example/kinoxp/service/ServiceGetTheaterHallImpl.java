@@ -35,7 +35,7 @@ public class ServiceGetTheaterHallImpl implements ServiceGetTheaterHall {
         for (int rows=1; rows<21; rows++) {
             for (int seat=1; seat<13; seat++) {
                 Seat seatObj = new Seat();
-                seatObj.setName(theaterName + " R" + rows + " S" + seat);
+                seatObj.setId(theaterName + " R" + rows + " S" + seat);
                 seatObj.setTheaterHall(smallTheaterHall);
                 seatRepository.save(seatObj);
             }
@@ -47,7 +47,7 @@ public class ServiceGetTheaterHallImpl implements ServiceGetTheaterHall {
         for (int rows=1; rows<26; rows++) {
             for (int seat=1; seat<17; seat++) {
                 Seat seatObj = new Seat();
-                seatObj.setName(theaterName2 + " R" + rows + " S" + seat);
+                seatObj.setId(theaterName2 + " R" + rows + " S" + seat);
                 seatObj.setTheaterHall(bigTheaterHall);
                 seatRepository.save(seatObj);
             }
