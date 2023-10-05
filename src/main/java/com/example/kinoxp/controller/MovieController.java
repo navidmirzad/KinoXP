@@ -35,6 +35,11 @@ public class MovieController {
         return movies;
     }
 
+    @GetMapping("/kinoxp")
+    public List<Movie> frontpageMovies() {
+        return movieRepository.findAll();
+    }
+
     @PostMapping("/addmovie")
     public ResponseEntity<Movie> addMovie(@RequestBody PostMovieDTO postMovieDTO) {
         Movie movie = new Movie();

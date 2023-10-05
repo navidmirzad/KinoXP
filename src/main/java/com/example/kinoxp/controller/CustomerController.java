@@ -9,11 +9,5 @@ import org.springframework.web.bind.annotation.RestController;
 public class CustomerController {
 
 
-    @GetMapping("/")
-    public String landingPage() {
-        return "";
-    }
-
-
 
 }
