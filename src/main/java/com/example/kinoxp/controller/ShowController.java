@@ -18,9 +18,15 @@ public class ShowController {
     @Autowired
     private ShowRepository showRepository;
 
-    @GetMapping("/kinoxp/shows")
-    public List<Show> getShows() {
-        serviceGetShowsAndTickets.createShowsAndTickets();
+    @GetMapping("/kinoxp/shows1")
+    public List<Show> getShows1() {
+        serviceGetShowsAndTickets.createShowsAndTicketsForSmallTheater();
+        return showRepository.findAll();
+    }
+
+    @GetMapping("/kinoxp/shows2")
+    public List<Show> getShows2() {
+        serviceGetShowsAndTickets.createShowsAndTicketsForBigTheater();
         return showRepository.findAll();
     }
 
