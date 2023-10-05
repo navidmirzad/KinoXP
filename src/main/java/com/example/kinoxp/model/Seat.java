@@ -11,8 +11,10 @@ import java.util.Set;
 public class Seat {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
+    private String name;
 
     @OneToMany(mappedBy = "seat", cascade = CascadeType.ALL)
     @JsonBackReference
@@ -48,5 +50,13 @@ public class Seat {
 
     public void setTheaterHall(TheaterHall theaterHall) {
         this.theaterHall = theaterHall;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }
