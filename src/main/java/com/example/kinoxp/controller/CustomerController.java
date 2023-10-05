@@ -1,6 +1,5 @@
 package com.example.kinoxp.controller;
 
-import com.example.kinoxp.exception.ResourceNotFoundException;
 import com.example.kinoxp.model.Customer;
 import com.example.kinoxp.repositories.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
