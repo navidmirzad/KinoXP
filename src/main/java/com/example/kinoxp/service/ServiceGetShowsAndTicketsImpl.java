@@ -52,52 +52,52 @@ public class ServiceGetShowsAndTicketsImpl implements ServiceGetShowsAndTickets 
             if (smallTheater.isPresent()) {
                 TheaterHall theaterHall = smallTheater.get();
 
-            while (currentTime.isBefore(LocalTime.of(22, 0))) { // Limit show times to 10:00 PM
-                // Ensure two shows can't be scheduled at the same time in the same theater
-                boolean isTimeSlotAvailable = true;
-                for (Show existingShow : theaterHall.getShows()) {
-                    if (existingShow.getDate().isEqual(currentDate) && existingShow.getTime().equals(currentTime)) {
-                        isTimeSlotAvailable = false;
-                        break;
+                while (currentTime.isBefore(LocalTime.of(22, 0))) { // Limit show times to 10:00 PM
+                    // Ensure two shows can't be scheduled at the same time in the same theater
+                    boolean isTimeSlotAvailable = true;
+                    for (Show existingShow : theaterHall.getShows()) {
+                        if (existingShow.getDate().isEqual(currentDate) && existingShow.getTime().equals(currentTime)) {
+                            isTimeSlotAvailable = false;
+                            break;
+                        }
                     }
+
+                    if (isTimeSlotAvailable) {
+                        // CREATE RANDOM MOVIE
+                        List<Movie> movies = movieRepository.findAll();
+                        int randomIndexMovie = random.nextInt(1, movies.size());
+                        Movie randomMovie = movies.get(randomIndexMovie);
+
+                        // Create a Show object
+                        Show newShow = new Show();
+                        newShow.setDate(currentDate);
+                        newShow.setTime(currentTime);
+                        newShow.setMovie(randomMovie);
+                        newShow.setTheaterHall(smallTheater.get());
+
+                        // Create tickets for each seat
+                        List<Ticket> tickets = new ArrayList<>();
+                        for (Seat seat : seatsSmallTheater) {
+                            Ticket ticket = new Ticket();
+                            ticket.setPrice(100);
+                            ticket.setSeat(seat);
+                            ticket.setShow(newShow);
+                            tickets.add(ticket);
+                        }
+                        newShow.setTickets(new HashSet<>(tickets));
+
+                        // Save the new show to the database
+                        showRepository.save(newShow);
+                    }
+
+                    // Increment the time by 3 hours for the next show
+                    currentTime = currentTime.plusHours(3);
                 }
 
-                if (isTimeSlotAvailable) {
-                    // CREATE RANDOM MOVIE
-                    List<Movie> movies = movieRepository.findAll();
-                    int randomIndexMovie = random.nextInt(1, movies.size());
-                    Movie randomMovie = movies.get(randomIndexMovie);
-
-                    // Create a Show object
-                    Show newShow = new Show();
-                    newShow.setDate(currentDate);
-                    newShow.setTime(currentTime);
-                    newShow.setMovie(randomMovie);
-                    newShow.setTheaterHall(smallTheater.get());
-
-                    // Create tickets for each seat
-                    List<Ticket> tickets = new ArrayList<>();
-                    for (Seat seat : seatsSmallTheater) {
-                        Ticket ticket = new Ticket();
-                        ticket.setPrice(100);
-                        ticket.setSeat(seat);
-                        ticket.setShow(newShow);
-                        tickets.add(ticket);
-                    }
-                    newShow.setTickets(new HashSet<>(tickets));
-
-                    // Save the new show to the database
-                    showRepository.save(newShow);
-                }
-
-                // Increment the time by 3 hours for the next show
-                currentTime = currentTime.plusHours(3);
+                // Move to the next day
+                currentDate = currentDate.plusDays(1);
             }
-
-            // Move to the next day
-            currentDate = currentDate.plusDays(1);
         }
-    }
 
 
 
