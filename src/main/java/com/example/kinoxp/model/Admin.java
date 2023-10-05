@@ -2,7 +2,6 @@ package com.example.kinoxp.model;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
-import lombok.*;
 
 @Entity
 public class Admin {

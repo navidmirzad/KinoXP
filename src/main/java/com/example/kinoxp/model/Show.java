@@ -2,7 +2,6 @@ package com.example.kinoxp.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
-import lombok.*;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
