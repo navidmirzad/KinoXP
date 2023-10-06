@@ -19,8 +19,6 @@ public class Movie {
     private String image;
     private int year;
 
-    //private String trailer;
-
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "movie_genre",
             joinColumns = @JoinColumn(name = "movie_id"),
@@ -82,12 +80,4 @@ public class Movie {
         genre.getMovies().add(this);
     }
 
-    /*
-    public String getTrailer() {
-        return trailer;
-    }
-
-    public void setTrailer(String trailer) {
-        this.trailer = trailer;
-    } */
 }
