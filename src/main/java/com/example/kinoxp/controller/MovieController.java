@@ -55,4 +55,15 @@ public class MovieController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    @GetMapping("/kinoxp/moviebyid/{movieId}")
+    public ResponseEntity<Optional<Movie>> getMovieById(@PathVariable int movieId) {
+        Optional<Movie> movieById = movieRepository.findById(movieId);
+        if (movieById.isPresent()) {
+            return new ResponseEntity<>(movieById, HttpStatus.OK);
+        }
+        else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
 }
