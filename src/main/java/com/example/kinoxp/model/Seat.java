@@ -10,8 +10,7 @@ import java.util.Set;
 public class Seat {
 
     @Id
-    private int id;
-
+    private String id;
 
     @OneToMany(mappedBy = "seat", cascade = CascadeType.ALL)
     @JsonBackReference
@@ -25,13 +24,6 @@ public class Seat {
 
     }
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
 
     public Set<Ticket> getTickets() {
         return tickets;
@@ -47,5 +39,14 @@ public class Seat {
 
     public void setTheaterHall(TheaterHall theaterHall) {
         this.theaterHall = theaterHall;
+    }
+
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 }

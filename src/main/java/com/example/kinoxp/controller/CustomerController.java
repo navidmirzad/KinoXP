@@ -1,10 +1,7 @@
 package com.example.kinoxp.controller;
 
-import ch.qos.logback.core.model.Model;
-import com.example.kinoxp.exception.ResourceNotFoundException;
 import com.example.kinoxp.model.Customer;
 import com.example.kinoxp.repositories.CustomerRepository;
-import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,23 +17,29 @@ public class CustomerController {
     CustomerRepository customerRepository;
 
     @PostMapping("/kinoxp/login")
-    public ResponseEntity<Customer> login(
-            @RequestParam("email") String email,
-            @RequestParam("password") String password,
-            HttpSession session,
-            Model model) {
+    public ResponseEntity<Customer> login(@RequestBody Customer requestCustomer) {
+        Optional<Customer> customerOptional = customerRepository.findCustomerByEmail(requestCustomer.getEmail());
+        if (customerOptional.isPresent()) {
+            Customer storedCustomer = customerOptional.get();
 
-        // Authenticate user
-        Optional<Customer> authenticatedUser = customerRepository.findCustomerByEmailAndPassword(email, password);
-        if (authenticatedUser.isPresent()) {
-            // Create session for user and set session timeout to 15min (container default: 15 min)
-            session.setAttribute("user", authenticatedUser.get());
-            session.setMaxInactiveInterval(900);
-            return new ResponseEntity<>(HttpStatus.OK);
+            // Compare the stored password with the inputted password
+            if (storedCustomer.getPassword().equals(requestCustomer.getPassword())) {
+                return ResponseEntity.ok(storedCustomer);
+            }
         }
-
-        // Wrong login info
-        return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
     }
 
+
+//    @PostMapping("/kinoxp")
+//    public ResponseEntity<Customer> postKommune(@RequestBody Customer customer) {
+//        System.out.println("Indsætter ny Customer");
+//        System.out.println(customer);
+//        Customer savedKommune = customerRepository.save(customer);
+//        if (savedKommune == null) {
+//            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+//        } else {
+//            return new ResponseEntity<>(savedKommune, HttpStatus.CREATED);
+//        }
+//    }
 }
