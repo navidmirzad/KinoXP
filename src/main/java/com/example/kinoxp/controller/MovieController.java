@@ -2,6 +2,7 @@ package com.example.kinoxp.controller;
 
 import com.example.kinoxp.dto.MovieDTO;
 import com.example.kinoxp.dto.PostMovieDTO;
+import com.example.kinoxp.exception.ResourceNotFoundException;
 import com.example.kinoxp.model.Genre;
 import com.example.kinoxp.model.Movie;
 import com.example.kinoxp.repositories.GenreRepository;
@@ -53,6 +54,12 @@ public class MovieController {
         movie.setGenres(setGenre);
         movieRepository.save(movie);
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @GetMapping("/kinoxp/movie/{id}")
+    public ResponseEntity<Movie> movieById(@PathVariable int id) {
+        Movie movie = movieRepository.findMovieById(id).orElseThrow(() -> new ResourceNotFoundException("Kommune ikke fundet med navn = " + id ));
+        return new ResponseEntity<>(movie, HttpStatus.OK);
     }
 
 }
