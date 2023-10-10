@@ -79,7 +79,7 @@ public class ApiServiceGetMoviesImpl implements ApiServiceGetMovies {
                 movie.setTitle(movieData.getTitle());
                 movie.setDescription(movieData.getDescription());
                 movie.setYear(movieData.getYear());
-                movie.setImage(movieData.getImage());
+                movie.setImage(movieData.getImage());;
 
                 for (String genreName : movieData.getGenres()) {
                     Genre genre = genreRepository.findByName(genreName);

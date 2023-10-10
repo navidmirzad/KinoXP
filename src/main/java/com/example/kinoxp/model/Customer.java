@@ -13,18 +13,19 @@ public class Customer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+    private String firstName;
+    private String lastName;
     @Column(unique = true)
     private String email;
+    @Column(unique = true)
+    private String userName;
     private String password;
-    private Date birthday;
-    private int phoneNumber;
 
     @OneToMany(mappedBy = "customer")
     @JsonBackReference
     private Set<Ticket> tickets = new HashSet<>();
 
-    public Customer() {
-    }
+    public Customer() {}
 
     public int getId() {
         return id;
@@ -50,27 +51,35 @@ public class Customer {
         this.password = password;
     }
 
-    public Date getBirthday() {
-        return birthday;
-    }
-
-    public void setBirthday(Date birthday) {
-        this.birthday = birthday;
-    }
-
-    public int getPhoneNumber() {
-        return phoneNumber;
-    }
-
-    public void setPhoneNumber(int phoneNumber) {
-        this.phoneNumber = phoneNumber;
-    }
-
     public Set<Ticket> getTickets() {
         return tickets;
     }
 
     public void setTickets(Set<Ticket> tickets) {
         this.tickets = tickets;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 }

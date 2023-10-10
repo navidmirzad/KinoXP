@@ -16,6 +16,7 @@ public class MovieDTO {
     private String description;
     private String image;
     private Integer year;
+
     @JsonProperty("genre")
     private List<String> genres = new ArrayList<>();
     @JsonIgnore
@@ -106,4 +107,5 @@ public class MovieDTO {
     public void setId(int id) {
         this.id = id;
     }
+
 }
