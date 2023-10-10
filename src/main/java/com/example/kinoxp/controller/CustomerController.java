@@ -3,6 +3,7 @@ package com.example.kinoxp.controller;
 import com.example.kinoxp.dto.PostCustomerDTO;
 import com.example.kinoxp.model.Customer;
 import com.example.kinoxp.repositories.CustomerRepository;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,16 +20,18 @@ public class CustomerController {
     CustomerRepository customerRepository;
 
     @PostMapping("/kinoxp/login")
-    public ResponseEntity<Customer> login(@RequestBody Customer customer) {
-        Optional<Customer> customerOptional = customerRepository.findCustomerByEmail(customer.getEmail());
+    public ResponseEntity<Customer> login(@RequestParam String userName,
+                                          @RequestParam String password,
+                                          HttpSession session) {
+        Optional<Customer> customerOptional = customerRepository.findCustomerByUserNameAndPassword(userName, password);
         if (customerOptional.isPresent()) {
+            // Authentication successful, get the customer
+            Customer authenticatedCustomer = customerOptional.get();
 
-            Customer customer1 = customerOptional.get();
+            // Store the customer's ID in the session
+            session.setAttribute("customerId", authenticatedCustomer.getId());
 
-            // Compare the stored password with the inputted password
-            if (customer.getPassword().equals(customer1.getPassword())) {
-                return ResponseEntity.ok(customer1);
-            }
+            return ResponseEntity.ok(authenticatedCustomer);
         }
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
     }
