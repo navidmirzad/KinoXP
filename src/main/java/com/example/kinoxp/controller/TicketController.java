@@ -83,4 +83,17 @@ public class TicketController {
     }
 
 
+    @PostMapping("/kinoxp/cancel/{ticketId}")
+    public ResponseEntity<Ticket> cancelTicket(@PathVariable int ticketId) {
+        Optional<Ticket> optionalTicket = ticketRepository.findById(ticketId);
+        if (optionalTicket.isPresent()) {
+            Ticket ticket = optionalTicket.get();
+            ticket.setCustomer(null);
+            ticketRepository.save(ticket);
+            return new ResponseEntity<>(HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+
+
 }
