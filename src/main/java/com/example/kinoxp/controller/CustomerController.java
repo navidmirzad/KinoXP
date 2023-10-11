@@ -18,7 +18,7 @@ public class CustomerController {
     @Autowired
     CustomerRepository customerRepository;
 
-    @PostMapping("/kinoxp/login")
+    /*@PostMapping("/kinoxp/login")
     public ResponseEntity<Customer> login(@RequestBody Customer requestCustomer) {
         Optional<Customer> customerOptional = customerRepository.findCustomerByEmail(requestCustomer.getEmail());
         if (customerOptional.isPresent()) {
@@ -30,7 +30,8 @@ public class CustomerController {
             }
         }
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
-    }
+    }*/
+
 
     @GetMapping("/customers")
     public List<Customer> getCustomers() {
@@ -57,16 +58,17 @@ public class CustomerController {
         }
     }
 
+/*    @PostMapping("/kinoxp")
+    public ResponseEntity<Customer> postKommune(@RequestBody Customer customer) {
+        System.out.println("Indsætter ny Customer");
+        System.out.println(customer);
+        Customer savedKommune = customerRepository.save(customer);
+        if (savedKommune == null) {
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        } else {
+            return new ResponseEntity<>(savedKommune, HttpStatus.CREATED);
+        }
+    }
+}*/
 
-//    @PostMapping("/kinoxp")
-//    public ResponseEntity<Customer> postKommune(@RequestBody Customer customer) {
-//        System.out.println("Indsætter ny Customer");
-//        System.out.println(customer);
-//        Customer savedKommune = customerRepository.save(customer);
-//        if (savedKommune == null) {
-//            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
-//        } else {
-//            return new ResponseEntity<>(savedKommune, HttpStatus.CREATED);
-//        }
-//    }
 }
