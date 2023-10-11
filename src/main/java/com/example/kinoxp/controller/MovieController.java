@@ -103,8 +103,12 @@ public class MovieController {
             }
 
             // Now you can safely delete the movie
-            movieRepository.delete(movie);
-            movieRepository.deleteById(id);
+            try {
+                movieRepository.deleteById(id);
+                movieRepository.delete(movie);
+            } catch (Exception e) {
+                System.out.println("Fejl i delete Movie" + e.getMessage());
+            }
 
             return ResponseEntity.ok("Deleted");
         } else {
