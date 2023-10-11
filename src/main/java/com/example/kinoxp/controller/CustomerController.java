@@ -19,18 +19,17 @@ public class CustomerController {
     CustomerRepository customerRepository;
 
     @PostMapping("/kinoxp/login")
-    public ResponseEntity<Customer> login(@RequestBody Customer customer) {
-        Optional<Customer> customerOptional = customerRepository.findCustomerByEmail(customer.getEmail());
+    public ResponseEntity<Customer> login(@RequestBody Customer requestCustomer) {
+        Optional<Customer> customerOptional = customerRepository.findCustomerByEmail(requestCustomer.getEmail());
         if (customerOptional.isPresent()) {
-
-            Customer customer1 = customerOptional.get();
+            Customer storedCustomer = customerOptional.get();
 
             // Compare the stored password with the inputted password
-            if (customer.getPassword().equals(customer1.getPassword())) {
-                return ResponseEntity.ok(customer1);
+            if (storedCustomer.getPassword().equals(requestCustomer.getPassword())) {
+                return ResponseEntity.ok(storedCustomer);
             }
         }
-        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
     }
 
     @GetMapping("/customers")
