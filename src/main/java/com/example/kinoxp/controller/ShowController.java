@@ -14,6 +14,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @RestController
@@ -65,4 +66,16 @@ public class ShowController {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+    @GetMapping("/kinoxp/today/shows")
+    public ResponseEntity<List<Show>> todaysShows() {
+        LocalDate now = LocalDate.now();
+        List<Show> todaysShows = showRepository.findShowsByDate(now);
+        if (todaysShows.size() > 0) {
+            return new ResponseEntity<>(todaysShows, HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+
 }

@@ -95,5 +95,14 @@ public class TicketController {
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
+    @GetMapping("/kinoxp/ticketsbyshowid/{showId}")
+    public ResponseEntity<List<Ticket>> ticketsByShowId(@PathVariable int showId) {
+        List<Ticket> ticketsByShowId = ticketRepository.findTicketsByShowId(showId);
+        if (ticketsByShowId.size() > 0) {
+            return new ResponseEntity<>(ticketsByShowId, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
 
 }
