@@ -61,16 +61,4 @@ public class CustomerController {
         }
     }
 
-
-//    @PostMapping("/kinoxp")
-//    public ResponseEntity<Customer> postKommune(@RequestBody Customer customer) {
-//        System.out.println("Indsætter ny Customer");
-//        System.out.println(customer);
-//        Customer savedKommune = customerRepository.save(customer);
-//        if (savedKommune == null) {
-//            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
-//        } else {
-//            return new ResponseEntity<>(savedKommune, HttpStatus.CREATED);
-//        }
-//    }
 }
