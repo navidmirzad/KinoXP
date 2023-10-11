@@ -1,5 +1,6 @@
 package com.example.kinoxp.controller;
 
+import com.example.kinoxp.dto.LoginDTO;
 import com.example.kinoxp.dto.PostCustomerDTO;
 import com.example.kinoxp.model.Customer;
 import com.example.kinoxp.repositories.CustomerRepository;
@@ -20,18 +21,17 @@ public class CustomerController {
     CustomerRepository customerRepository;
 
     @PostMapping("/kinoxp/login")
-    public ResponseEntity<Customer> login(@RequestParam String userName,
-                                          @RequestParam String password,
-                                          HttpSession session) {
-        Optional<Customer> customerOptional = customerRepository.findCustomerByUserNameAndPassword(userName, password);
+    public ResponseEntity<Customer> login(@RequestBody LoginDTO loginDTO) {
+
+        Optional<Customer> customerOptional = customerRepository.findCustomerByUserNameAndPassword(loginDTO.getUserName(),
+                loginDTO.getPassword());
+
         if (customerOptional.isPresent()) {
-            // Authentication successful, get the customer
-            Customer authenticatedCustomer = customerOptional.get();
 
-            // Store the customer's ID in the session
-            session.setAttribute("customerId", authenticatedCustomer.getId());
+            Customer customer = customerOptional.get();
 
-            return ResponseEntity.ok(authenticatedCustomer);
+
+            return ResponseEntity.ok(customer);
         }
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
     }

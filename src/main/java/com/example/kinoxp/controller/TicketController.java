@@ -15,6 +15,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
+@CrossOrigin
 public class TicketController {
 
     @Autowired
@@ -34,10 +35,21 @@ public class TicketController {
         return new ResponseEntity<>(ticketsByMovieId, HttpStatus.OK);
     }
 
-    @GetMapping("/kinoxp/tickets/{customerId}")
-    public List<Ticket> getTicketsByUserId(@PathVariable int customerId) {
-        return ticketRepository.findByCustomerId(customerId);
+    @GetMapping("/kinoxp/tickets/{userName}")
+    public ResponseEntity<List<Ticket>> getTicketsByUserName(@PathVariable String userName) {
+        Optional<Customer> optionalCustomer = customerRepository.findCustomerByUserName(userName);
+        System.out.println(userName);
+
+        if (optionalCustomer.isPresent()) {
+            System.out.println("er jeg present");
+            Customer customer = optionalCustomer.get();
+            List<Ticket> listOfTickets = ticketRepository.findByCustomerId(customer.getId());
+            return new ResponseEntity<>(listOfTickets, HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
+
+    //localhost:8080/kinoxp/tickets/customer
 
     @PostMapping("/kinoxp/tickets/add")
     public ResponseEntity<Ticket> orderTicket(@RequestParam int ticketId, HttpSession session) {
