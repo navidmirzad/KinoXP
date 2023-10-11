@@ -8,6 +8,7 @@ import com.example.kinoxp.repositories.GenreRepository;
 import com.example.kinoxp.repositories.MovieRepository;
 import com.example.kinoxp.service.ApiServiceGetMovies;
 import jakarta.servlet.http.HttpSession;
+import org.apache.coyote.Response;
 import org.hibernate.annotations.NotFound;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
@@ -16,6 +17,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.swing.text.html.Option;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -75,6 +77,17 @@ public class MovieController {
         if (findingMovie.isPresent()) {
             movie.setId(id);
             movieRepository.save(movie);
+            return ResponseEntity.ok(movie);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @DeleteMapping("/movie/{id}")
+    public ResponseEntity<Movie> deleteMovie(@PathVariable Integer id, @RequestBody Movie movie) {
+        Optional<Movie> deletedMovie = movieRepository.findById(id);
+        if (deletedMovie.isPresent()) {
+            movieRepository.delete(movie);
             return ResponseEntity.ok(movie);
         } else {
             return ResponseEntity.notFound().build();
