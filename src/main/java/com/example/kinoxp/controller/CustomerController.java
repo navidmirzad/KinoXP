@@ -20,7 +20,7 @@ public class CustomerController {
     @Autowired
     CustomerRepository customerRepository;
 
-    @PostMapping("/kinoxp/login")
+    @PostMapping("/kinoxp/customerlogin")
     public ResponseEntity<Customer> login(@RequestBody LoginDTO loginDTO) {
 
         Optional<Customer> customerOptional = customerRepository.findCustomerByUserNameAndPassword(loginDTO.getUserName(),
