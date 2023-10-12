@@ -20,6 +20,7 @@ public class Customer {
     @Column(unique = true)
     private String userName;
     private String password;
+    private Role role;
 
     @OneToMany(mappedBy = "customer")
     @JsonBackReference
@@ -81,5 +82,13 @@ public class Customer {
 
     public void setUserName(String userName) {
         this.userName = userName;
+    }
+
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
     }
 }

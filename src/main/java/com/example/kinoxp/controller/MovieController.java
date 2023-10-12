@@ -1,7 +1,6 @@
 package com.example.kinoxp.controller;
 
 import com.example.kinoxp.dto.PostMovieDTO;
-import com.example.kinoxp.model.Admin;
 import com.example.kinoxp.model.Genre;
 import com.example.kinoxp.model.Movie;
 import com.example.kinoxp.model.Show;
@@ -9,17 +8,11 @@ import com.example.kinoxp.repositories.GenreRepository;
 import com.example.kinoxp.repositories.MovieRepository;
 import com.example.kinoxp.repositories.ShowRepository;
 import com.example.kinoxp.service.ApiServiceGetMovies;
-import jakarta.servlet.http.HttpSession;
-import org.apache.coyote.Response;
-import org.hibernate.annotations.NotFound;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import javax.swing.text.html.Option;
 import java.util.*;
 
 @RestController

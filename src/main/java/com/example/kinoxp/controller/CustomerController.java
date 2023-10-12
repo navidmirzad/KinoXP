@@ -3,6 +3,7 @@ package com.example.kinoxp.controller;
 import com.example.kinoxp.dto.LoginDTO;
 import com.example.kinoxp.dto.PostCustomerDTO;
 import com.example.kinoxp.model.Customer;
+import com.example.kinoxp.model.Role;
 import com.example.kinoxp.repositories.CustomerRepository;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,6 +49,7 @@ public class CustomerController {
         customer.setFirstName(customerDTO.getFirstName());
         customer.setLastName(customerDTO.getLastName());
         customer.setEmail(customerDTO.getEmail());
+        customer.setRole(Role.CUSTOMER);
         customer.setUserName(customerDTO.getUserName());
         customer.setPassword(customerDTO.getPassword());
 
