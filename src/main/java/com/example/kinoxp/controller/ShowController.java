@@ -58,6 +58,12 @@ public class ShowController {
         return new ResponseEntity<>(showsByMovieId, HttpStatus.OK);
     }
 
+    @GetMapping("/kinoxp/currentshow/{showId}")
+    public ResponseEntity<List<Show>> getShowsByShowId(@PathVariable int showId) {
+        List<Show> showsByMovieId = showRepository.findShowById(showId);
+        return new ResponseEntity<>(showsByMovieId, HttpStatus.OK);
+    }
+
     @GetMapping("/kinoxp/{showId}/availableSeats")
     public ResponseEntity<?> getAvailableSeatsForShowtime(@PathVariable int showId) {
         try {

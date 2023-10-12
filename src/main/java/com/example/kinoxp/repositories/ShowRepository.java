@@ -10,6 +10,6 @@ import java.util.Optional;
 public interface ShowRepository extends JpaRepository<Show, Integer> {
 
     List<Show> findShowsByMovieId(int movieId);
-
-        Optional<Show> findById(int id);
+    List<Show> findShowById(int showId);
+    Optional<Show> findById(int id);
 }
