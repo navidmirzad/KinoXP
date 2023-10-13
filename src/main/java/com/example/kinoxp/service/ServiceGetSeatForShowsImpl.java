@@ -30,11 +30,13 @@ public class ServiceGetSeatForShowsImpl implements ServiceGetSeatForShows {
 
         List<Seat> reservedSeats = show.getTickets()
                 .stream()
+                .filter(ticket -> ticket.getCustomer() != null) // Assuming ticket's customer can be null
                 .map(Ticket::getSeat)
                 .collect(Collectors.toList());
 
-        allSeats.remove(reservedSeats);
+        allSeats.removeAll(reservedSeats);
 
         return allSeats;
     }
+
 }

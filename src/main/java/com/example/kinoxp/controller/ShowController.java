@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@CrossOrigin
 @RestController
 public class ShowController {
 
@@ -64,7 +65,7 @@ public class ShowController {
         return new ResponseEntity<>(showsByMovieId, HttpStatus.OK);
     }
 
-    @GetMapping("/kinoxp/{showId}/availableSeats")
+    @GetMapping("/kinoxp/{showId}")
     public ResponseEntity<?> getAvailableSeatsForShowtime(@PathVariable int showId) {
         try {
             List<Seat> availableSeats = serviceGetSeatForShows.getAvailableSeats(showId);
