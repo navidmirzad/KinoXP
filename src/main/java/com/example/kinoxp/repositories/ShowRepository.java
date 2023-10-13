@@ -13,8 +13,5 @@ public interface ShowRepository extends JpaRepository<Show, Integer> {
     List<Show> findShowsByMovieId(int movieId);
     List<Show> findShowById(int showId);
     Optional<Show> findById(int id);
-
-    Optional<Show> findById(int id);
-
     List<Show> findByMovie(Movie movie);
 }
