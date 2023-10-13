@@ -47,7 +47,6 @@ The KinoXP Cinema Reservation and Ticketing System is an IT solution developed t
    ```bash
    git clone https://github.com/your-username/kinoxp-cinema-system.git
 
-- **Setup on local machine**
 - Once cloned run /api/admin/imdb
 - This runs a script to you MySQL DB
 - Fetches top 100 movies from imdb
