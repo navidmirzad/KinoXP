@@ -14,6 +14,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @RestController
@@ -52,6 +53,16 @@ public class ShowController {
 
     @GetMapping("/kinoxp/allshows/{movieId}")
     public ResponseEntity<List<Show>> getShowsByMovieId(@PathVariable int movieId) {
+
+        LocalDate today = LocalDate.now();
+        List<Show> allShows = showRepository.findAll();
+
+        for (Show show : allShows) {
+            if (show.getDate().isBefore(today)) {
+                showRepository.delete(show);
+            }
+        }
+
         List<Show> showsByMovieId = showRepository.findShowsByMovieId(movieId);
         return new ResponseEntity<>(showsByMovieId, HttpStatus.OK);
     }
