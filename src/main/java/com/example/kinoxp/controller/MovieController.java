@@ -8,6 +8,7 @@ import com.example.kinoxp.repositories.GenreRepository;
 import com.example.kinoxp.repositories.MovieRepository;
 import com.example.kinoxp.repositories.ShowRepository;
 import com.example.kinoxp.service.ApiServiceGetMovies;
+import com.example.kinoxp.service.ScriptService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -32,10 +33,15 @@ public class MovieController {
     MovieRepository movieRepository;
     // get all movies from imdb api. shouldn't be called that often - 100 calls per day
 
+    @Autowired
+    private ScriptService scriptService;
+
+
+    // call endpoint to get all 100 imdb movies, theaterhall 1+2, admin 1+2, shows and tickets all at once.
     @GetMapping("/api/admin/imdb")
-    public List<Movie> getImdbMovies() {
-        List<Movie> movies = apiServiceGetMovies.getMovies();
-        return movies;
+    public ResponseEntity<String> getImdbMovies() {
+        scriptService.programStart();
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @GetMapping("/kinoxp")

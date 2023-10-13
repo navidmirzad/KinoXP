@@ -4,15 +4,12 @@ import com.example.kinoxp.model.Seat;
 import com.example.kinoxp.model.Show;
 import com.example.kinoxp.repositories.ShowRepository;
 import com.example.kinoxp.service.ServiceGetSeatForShows;
-import com.example.kinoxp.service.ServiceGetShowsAndTickets;
 import com.example.kinoxp.service.ShowService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+
 
 import java.time.LocalDate;
 import java.util.List;
@@ -20,9 +17,6 @@ import java.util.List;
 @RestController
 @CrossOrigin
 public class ShowController {
-
-    @Autowired
-    private ServiceGetShowsAndTickets serviceGetShowsAndTickets;
 
     @Autowired
     ServiceGetSeatForShows serviceGetSeatForShows;
@@ -33,17 +27,7 @@ public class ShowController {
     @Autowired
     private ShowService showService;
 
-    @GetMapping("/kinoxp/shows1")
-    public List<Show> getShows1() {
-        serviceGetShowsAndTickets.createShowsAndTicketsForSmallTheater();
-        return showRepository.findAll();
-    }
 
-    @GetMapping("/kinoxp/shows2")
-    public List<Show> getShows2() {
-        serviceGetShowsAndTickets.createShowsAndTicketsForBigTheater();
-        return showRepository.findAll();
-    }
 
     @GetMapping("/kinoxp/allshows")
     public ResponseEntity<List<Show>> getSortedShows() {
