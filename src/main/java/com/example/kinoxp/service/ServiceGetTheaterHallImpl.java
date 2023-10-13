@@ -1,7 +1,10 @@
 package com.example.kinoxp.service;
 
+import com.example.kinoxp.model.Customer;
+import com.example.kinoxp.model.Role;
 import com.example.kinoxp.model.Seat;
 import com.example.kinoxp.model.TheaterHall;
+import com.example.kinoxp.repositories.CustomerRepository;
 import com.example.kinoxp.repositories.SeatRepository;
 import com.example.kinoxp.repositories.TheaterHallRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +21,9 @@ public class ServiceGetTheaterHallImpl implements ServiceGetTheaterHall {
 
     @Autowired
     private SeatRepository seatRepository;
+
+    @Autowired
+    private CustomerRepository customerRepository;
 
     public void createTheaterHalls() {
 
@@ -53,6 +59,23 @@ public class ServiceGetTheaterHallImpl implements ServiceGetTheaterHall {
             }
         }
 
+        Customer customer1 = new Customer();
+        customer1.setFirstName("admin1");
+        customer1.setLastName("admin1");
+        customer1.setEmail("admin1@admin1.com");
+        customer1.setUserName("admin1");
+        customer1.setPassword("admin1");
+        customer1.setRole(Role.ADMIN);
+        customerRepository.save(customer1);
+
+        Customer customer2 = new Customer();
+        customer2.setFirstName("admin2");
+        customer2.setLastName("admin2");
+        customer2.setEmail("admin2@admin2.com");
+        customer2.setUserName("admin2");
+        customer2.setPassword("admin2");
+        customer2.setRole(Role.ADMIN);
+        customerRepository.save(customer2);
 
     }
 }

@@ -1,9 +1,7 @@
 package com.example.kinoxp.model;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
-import lombok.*;
+
 
 import java.util.HashSet;
 import java.util.Set;
@@ -19,7 +17,7 @@ public class Movie {
     private String image;
     private int year;
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany
     @JoinTable(name = "movie_genre",
             joinColumns = @JoinColumn(name = "movie_id"),
             inverseJoinColumns = @JoinColumn(name = "genre_id"))

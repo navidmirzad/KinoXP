@@ -11,6 +11,7 @@ import java.util.List;
 
 @CrossOrigin
 @RestController
+@CrossOrigin
 public class SeatController {
 
     @Autowired

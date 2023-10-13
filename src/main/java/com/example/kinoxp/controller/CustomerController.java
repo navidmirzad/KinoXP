@@ -1,8 +1,11 @@
 package com.example.kinoxp.controller;
 
+import com.example.kinoxp.dto.LoginDTO;
 import com.example.kinoxp.dto.PostCustomerDTO;
 import com.example.kinoxp.model.Customer;
+import com.example.kinoxp.model.Role;
 import com.example.kinoxp.repositories.CustomerRepository;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,18 +21,20 @@ public class CustomerController {
     @Autowired
     CustomerRepository customerRepository;
 
-    @PostMapping("/kinoxp/login")
-    public ResponseEntity<Customer> login(@RequestBody Customer requestCustomer) {
-        Optional<Customer> customerOptional = customerRepository.findCustomerByEmail(requestCustomer.getEmail());
-        if (customerOptional.isPresent()) {
-            Customer storedCustomer = customerOptional.get();
+    @PostMapping("/kinoxp/customerlogin")
+    public ResponseEntity<Customer> login(@RequestBody LoginDTO loginDTO) {
 
-            // Compare the stored password with the inputted password
-            if (storedCustomer.getPassword().equals(requestCustomer.getPassword())) {
-                return ResponseEntity.ok(storedCustomer);
-            }
+        Optional<Customer> customerOptional = customerRepository.findCustomerByUserNameAndPassword(loginDTO.getUserName(),
+                loginDTO.getPassword());
+
+        if (customerOptional.isPresent()) {
+
+            Customer customer = customerOptional.get();
+
+
+            return ResponseEntity.ok(customer);
         }
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
     }
 
     @GetMapping("/customers")
@@ -44,6 +49,7 @@ public class CustomerController {
         customer.setFirstName(customerDTO.getFirstName());
         customer.setLastName(customerDTO.getLastName());
         customer.setEmail(customerDTO.getEmail());
+        customer.setRole(Role.CUSTOMER);
         customer.setUserName(customerDTO.getUserName());
         customer.setPassword(customerDTO.getPassword());
 
@@ -57,16 +63,4 @@ public class CustomerController {
         }
     }
 
-
-//    @PostMapping("/kinoxp")
-//    public ResponseEntity<Customer> postKommune(@RequestBody Customer customer) {
-//        System.out.println("Indsætter ny Customer");
-//        System.out.println(customer);
-//        Customer savedKommune = customerRepository.save(customer);
-//        if (savedKommune == null) {
-//            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
-//        } else {
-//            return new ResponseEntity<>(savedKommune, HttpStatus.CREATED);
-//        }
-//    }
 }

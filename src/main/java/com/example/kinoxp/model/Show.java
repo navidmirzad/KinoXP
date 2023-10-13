@@ -26,7 +26,7 @@ public class Show {
         @JoinColumn(name = "theaterhall", referencedColumnName = "id")
         private TheaterHall theaterHall;
 
-        @OneToMany(mappedBy = "show", cascade = CascadeType.ALL)
+        @OneToMany(mappedBy = "show", cascade = CascadeType.ALL, orphanRemoval = true)
         @JsonBackReference
         private Set<Ticket> tickets = new HashSet<>();
 

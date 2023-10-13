@@ -1,19 +1,17 @@
 package com.example.kinoxp.controller;
 
 import com.example.kinoxp.dto.PostMovieDTO;
-import com.example.kinoxp.model.Admin;
 import com.example.kinoxp.model.Genre;
 import com.example.kinoxp.model.Movie;
+import com.example.kinoxp.model.Show;
 import com.example.kinoxp.repositories.GenreRepository;
 import com.example.kinoxp.repositories.MovieRepository;
+import com.example.kinoxp.repositories.ShowRepository;
 import com.example.kinoxp.service.ApiServiceGetMovies;
-import jakarta.servlet.http.HttpSession;
-import org.hibernate.annotations.NotFound;
+import com.example.kinoxp.service.ScriptService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
@@ -29,13 +27,21 @@ public class MovieController {
     GenreRepository genreRepository;
 
     @Autowired
+    ShowRepository showRepository;
+
+    @Autowired
     MovieRepository movieRepository;
     // get all movies from imdb api. shouldn't be called that often - 100 calls per day
 
+    @Autowired
+    private ScriptService scriptService;
+
+
+    // call endpoint to get all 100 imdb movies, theaterhall 1+2, admin 1+2, shows and tickets all at once.
     @GetMapping("/api/admin/imdb")
-    public List<Movie> getImdbMovies() {
-        List<Movie> movies = apiServiceGetMovies.getMovies();
-        return movies;
+    public ResponseEntity<String> getImdbMovies() {
+        scriptService.programStart();
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @GetMapping("/kinoxp")
@@ -80,29 +86,33 @@ public class MovieController {
         }
     }
 
+    @DeleteMapping("/movie/{id}")
+    public ResponseEntity<String> deleteMovie(@PathVariable Integer id) {
+        Optional<Movie> movieOptional = movieRepository.findById(id);
 
+        if (movieOptional.isPresent()) {
+            Movie movie = movieOptional.get();
 
-   // @PutMapping("/editmovie")
+            // Get the associated shows for this movie
+            List<Show> shows = showRepository.findByMovie(movie);
 
- /*
-    @GetMapping("/editaccount")
-    public String editAccount(HttpSession session, Model model) {
-        User user = (User) session.getAttribute("user"); // vi det vi har gemt/sendt med i sessions. Her er det så User objektet.
-        user = accountService.getUserById(user.getUserID()); // fra det User objekt vi fik med i sessions. Så får vi det userID bundet til den user vi gav med i sessions
-        // hvilket er den vi loggede ind med. Så vores
-        model.addAttribute("user", user); // Vi tilføjer vores user som vi fik med fra vores session til model, da vi skal vise alt dataen der hører til den bruger
-        // da det er editAccount og man skal kunne se de informationer man evt. vil ændre.
-        model.addAttribute("roles", Role.values()); // (Role.values() returnerer et array af værdierne 'Role') for at vise rollerne hvis man vil ændre dem.
-        return "editaccount";
+            // Delete the shows and their associated tickets
+            for (Show show : shows) {
+                showRepository.delete(show);
+            }
+
+            // Now you can safely delete the movie
+            try {
+                movieRepository.deleteById(id);
+                movieRepository.delete(movie);
+            } catch (Exception e) {
+                System.out.println("Fejl i delete Movie" + e.getMessage());
+            }
+
+            return ResponseEntity.ok("Deleted");
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
-
-    @PostMapping("editaccount")
-    public String editedAccount(HttpSession session, User editedUser) {
-        User user = (User) session.getAttribute("user"); // her tager vi det User objekt vi sendte med i sessions tidligere.
-        accountService.editAccount(user.getUserID(), editedUser); // vi returner også den nye User som editedUser
-        // Her kalder metoden til accountService.editAccount og beder den om at ændre brugeren
-        // med det userID der er forbundet til den bruger vi er logget ind med. Muligt pga. sessions.
-        return "redirect:/frontpage";
-    }*/
 
 }
