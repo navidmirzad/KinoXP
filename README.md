@@ -2,7 +2,7 @@
 
 ## Project Overview
 
-The KinoXP Cinema Reservation and Ticketing System is an IT solution developed to streamline the management of cinema reservations, ticket sales, and show planning for KinoXP, a smaller cinema with 2 movie theaters. This system provides a user-friendly interface for employees to efficiently handle reservations, ticket sales, concessions, and show scheduling. It also offers advanced features such as age limit enforcement, seat management, and dynamic show planning.
+The KinoXP Cinema Reservation and Ticketing System is an IT solution developed to streamline the management of cinema reservations, ticket sales, and show planning for KinoXP, a smaller cinema with 2 movie theaters. This system provides a user-friendly interface for employees to efficiently handle reservations, ticket sales, concessions, and show scheduling. It also offers advanced features such as seat management, and dynamic show planning.
 
 ## Features
 
@@ -14,7 +14,6 @@ The KinoXP Cinema Reservation and Ticketing System is an IT solution developed t
 - **Cinema Information:**
   - KinoXP has 2 movie theaters.
   - Movies are categorized into genres (Horror, Romance, Action, Science Fiction, etc.).
-  - Different age limits apply to individual movies.
 
 - **Seating Arrangements:**
   - Smallest Theater: 20 rows with 12 numbered seats per row.
@@ -27,22 +26,19 @@ The KinoXP Cinema Reservation and Ticketing System is an IT solution developed t
 
 - **Ticket Sales:**
   - Tickets can be purchased on-site and online.
-  - Age limits are enforced for ticket purchases.
-  - Integration with concession sales (popcorn, candy, soda, etc.).
+  - Tickets can be refunded on-site and online
 
 - **Show Scheduling:**
-  - Shows are planned 3 months in advance.
+  - Shows are planned 1 months in advance.
   - Flexibility for adding extra shows based on demand.
-  - Automatic removal of poorly performing movies from the program.
+  - Removal of poorly performing movies from the program.
 
 ## Technologies Used
 
 - **Frontend:** HTML, CSS, JavaScript
 - **Backend:** Java Spring Boot
 - **Database:** MySQL
-- **Authentication:** Implement secure user authentication
 - **Version Control:** Git and GitHub
-- **Deployment:** Azure
 
 ## Getting Started
 
@@ -51,13 +47,20 @@ The KinoXP Cinema Reservation and Ticketing System is an IT solution developed t
    ```bash
    git clone https://github.com/your-username/kinoxp-cinema-system.git
 
+- **Setup on local machine**
+- Once cloned run /api/admin/imdb
+- This runs a script to you MySQL DB
+- Fetches top 100 movies from imdb
+- Creates two theaters and the seats within
+- Creates shows and available tickets one month in advance
+- Creates two admin users with CRUD abilities
 
 # Contributors
 
 The following individuals have contributed to this project:
 
 - [Navid Mirzad](https://github.com/navidmirzad)
-- [Colleague 1](https://github.com/colleague1-username)
-- [Colleague 2](https://github.com/colleague2-username)
-- [Colleague 3](https://github.com/colleague3-username)
-- [Colleague 4](https://github.com/colleague3-username)
+- [Yussef Talbi](https://github.com/youssef12314)
+- [André Jensen](https://github.com/aeaj)
+- [Enes Kocer](https://github.com/ekocer9)
+- [Mathias Wulff Nielsen](https://github.com/math92n4)
