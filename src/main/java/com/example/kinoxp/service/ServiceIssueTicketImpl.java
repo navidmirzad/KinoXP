@@ -1,3 +1,4 @@
+/*
 package com.example.kinoxp.service;
 
 import com.example.kinoxp.dto.TicketRequestDTO;
@@ -46,3 +47,4 @@ public class ServiceIssueTicketImpl implements ServiceIssueTicket {
         return ticketRepository.save(ticket);
     }
 }
+*/

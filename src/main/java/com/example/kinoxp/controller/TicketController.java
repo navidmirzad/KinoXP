@@ -6,7 +6,7 @@ import com.example.kinoxp.model.Ticket;
 import com.example.kinoxp.repositories.CustomerRepository;
 import com.example.kinoxp.repositories.TicketRepository;
 import com.example.kinoxp.service.ServiceGetShowsAndTickets;
-import com.example.kinoxp.service.ServiceIssueTicket;
+//import com.example.kinoxp.service.ServiceIssueTicket;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -32,7 +32,7 @@ public class TicketController {
     @Autowired
     private TicketRepository ticketRepository;
 
-    @Autowired
+    /*@Autowired
     private ServiceIssueTicket serviceIssueTicket;
 
     @PostMapping("/kinoxp/ticket")
@@ -45,12 +45,27 @@ public class TicketController {
         } catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
-    }
+    }*/
 
     @GetMapping("/kinoxp/tickets")
     public List<Ticket> getTickets() {
         return ticketRepository.findAll();
     }
+
+    @PutMapping("/kinoxp/posticket")
+    public ResponseEntity<Ticket> postTicket(@RequestBody TicketRequestDTO ticketRequestDTO) {
+        Optional<Ticket> findByIdTicket = ticketRepository.findById(ticketRequestDTO.getTicketId());
+        Optional<Customer> findByUserNameCustomer = customerRepository.findCustomerByUserName(ticketRequestDTO.getUserName());
+
+        if (findByIdTicket.isPresent() && findByUserNameCustomer.isPresent()) {
+            Ticket ticket = findByIdTicket.get();
+            Customer customer = findByUserNameCustomer.get();
+            ticket.setCustomer(customer);
+            ticketRepository.save(ticket);
+            return new ResponseEntity<>(ticket, HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+}
 
     @GetMapping("/kinoxp/tickets/byshow/{showId}")
     public ResponseEntity<List<Ticket>> getTicketsByMovieId(@PathVariable int showId) {

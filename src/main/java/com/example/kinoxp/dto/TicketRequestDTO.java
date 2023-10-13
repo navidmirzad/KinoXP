@@ -1,17 +1,14 @@
 package com.example.kinoxp.dto;
 
+import com.example.kinoxp.model.Ticket;
+
 public class TicketRequestDTO {
-    private int showId;
+
+    private int ticketId;
     private String seatId;
-    private int customerId;
+    private String userName;
 
-    public int getShowId() {
-        return showId;
-    }
-
-    public void setShowId(int showId) {
-        this.showId = showId;
-    }
+    public TicketRequestDTO() {}
 
     public String getSeatId() {
         return seatId;
@@ -21,11 +18,19 @@ public class TicketRequestDTO {
         this.seatId = seatId;
     }
 
-    public int getCustomerId() {
-        return customerId;
+    public String getUserName() {
+        return userName;
     }
 
-    public void setCustomerId(int customerId) {
-        this.customerId = customerId;
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public int getTicketId() {
+        return ticketId;
+    }
+
+    public void setTicketId(int ticketId) {
+        this.ticketId = ticketId;
     }
 }
