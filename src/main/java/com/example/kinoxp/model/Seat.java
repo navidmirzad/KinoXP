@@ -6,7 +6,7 @@ import jakarta.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
-@Entity
+@Entity(name = "seat")
 public class Seat {
 
     @Id
@@ -15,6 +15,12 @@ public class Seat {
     @OneToMany(mappedBy = "seat", cascade = CascadeType.ALL)
     @JsonBackReference
     private Set<Ticket> tickets = new HashSet<>();
+
+    @Column(name = "ro_number")
+    private int rowNumber;
+
+    @Column(name = "seat_number")
+    private int seatNumber;
 
     @ManyToOne
     @JoinColumn(name = "theaterhall", referencedColumnName = "id")
@@ -48,5 +54,21 @@ public class Seat {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public int getRowNumber() {
+        return rowNumber;
+    }
+
+    public void setRowNumber(int rowNumber) {
+        this.rowNumber = rowNumber;
+    }
+
+    public int getSeatNumber() {
+        return seatNumber;
+    }
+
+    public void setSeatNumber(int seatNumber) {
+        this.seatNumber = seatNumber;
     }
 }

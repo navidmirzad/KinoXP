@@ -11,7 +11,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class ServiceGetTheaterHallImpl implements ServiceGetTheaterHall {
@@ -42,6 +44,8 @@ public class ServiceGetTheaterHallImpl implements ServiceGetTheaterHall {
             for (int seat=1; seat<13; seat++) {
                 Seat seatObj = new Seat();
                 seatObj.setId(theaterName + " R" + rows + " S" + seat);
+                seatObj.setSeatNumber(seat);
+                seatObj.setRowNumber(rows);
                 seatObj.setTheaterHall(smallTheaterHall);
                 seatRepository.save(seatObj);
             }
@@ -54,6 +58,8 @@ public class ServiceGetTheaterHallImpl implements ServiceGetTheaterHall {
             for (int seat=1; seat<17; seat++) {
                 Seat seatObj = new Seat();
                 seatObj.setId(theaterName2 + " R" + rows + " S" + seat);
+                seatObj.setSeatNumber(seat);
+                seatObj.setRowNumber(rows);
                 seatObj.setTheaterHall(bigTheaterHall);
                 seatRepository.save(seatObj);
             }
